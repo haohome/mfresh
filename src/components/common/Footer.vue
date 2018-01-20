@@ -3,9 +3,9 @@
   <div class="f_con clearfloat">
     <ul>
       <li>
-        <h3>走进净美仕</h3>
+        <h3>走进JMS</h3>
         <a href="">公司简介</a>
-        <a href="">净美仕精神</a>
+        <a href="">JMS精神</a>
         <a href="">品牌历程</a>
       </li>
       <li>
@@ -21,7 +21,7 @@
         <a href="">下载中心</a>
       </li>
       <li>
-        <h3>加入净美仕</h3>
+        <h3>加入JMS</h3>
         <a href="">招聘贤才</a>
         <a href="">联系我们</a>
         <a href="">网站地图</a>
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="copyright">
-    Copyright © 2018 Hfood Inc 保留所有权利。使用条款|客户隐私政策        © 北京Hfood环境科技有限公司
+    Copyright © 2018 JMS Inc 保留所有权利。使用条款|客户隐私政策        © 北京JMS环境科技有限公司
   </div>
 </div>
 </template>

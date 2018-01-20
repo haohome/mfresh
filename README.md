@@ -1,6 +1,7 @@
 # mfresh
 
 > A Vue.js project
+> 这是一个Vue的练手项目,前台采用vue+webpack组合,ajax数据获取采用Axios,后端服务器采用Node.js
 
 ## Build Setup
 
