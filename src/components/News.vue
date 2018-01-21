@@ -35,7 +35,12 @@ export default {
     }
   },
   mounted(){
-    this.getList()
+    this.getList() //挂载的时候获取新闻列表
+  },
+  watch: { //监听页码变化,这里可以通知其他组件做出相应改变
+      pno: function(newValue , oldValue){
+          console.log(arguments);
+      }
   },
   methods: {
     getList(){
@@ -69,7 +74,7 @@ export default {
       });
     },
     //点击上一页/下一页事件
-    togglePage(index){
+    togglePage(index){ //通过对index赋值来识别按钮
       var self=this;
       if(index>0){
         if(self.pno>=self.pageCount)return;
@@ -96,8 +101,8 @@ export default {
       let left=1;
       let right=this.pageCount;
       var realCount=[];
-      if(right>=3){
-        if(this.pno>1 && this.pno<this.pageCount-1){ //123
+      if(right>=3){//控制最多显示3页
+        if(this.pno>1 && this.pno+1<this.pageCount){
           left=this.pno-1;
           right=this.pno+1;
         }else {
