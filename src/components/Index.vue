@@ -66,9 +66,9 @@ export default {
         url: '/carosel/product',
         withCredentials: true,
         responseType: 'json',
-        transformResponse:[function(response){
+        transformResponse:function(response){
           self.bannerList=response;
-        }],
+        },
       });
     }
   }

@@ -11,21 +11,16 @@
     <div class="main container">
       <div class="news">
         <ul>
-          <!--<li><span>2016-02-21</span><a href="">空气净化器要逆天？ “玫瑰金”“土豪金”齐上阵</a></li>-->
-          <!--<li><span>2016-02-21</span><a href="">净美仕新风净化系统　助力校园新风行动</a></li>-->
-          <!--<li><span>2016-02-21</span><a href="">全国新风行动全面启动 助推净美仕战略升级</a></li>-->
-          <!--<li><span>2016-02-21</span><a href="">智能空气净化器翻盘：净美仕能否领衔?</a></li>-->
+          <li v-for="(temp,key) in newsList" :key=key>
+            <span>{{temp.pubtime}}</span>
+            <a href="">{{temp.title}}</a></li>
         </ul>
       </div>
       <!-- 分页导航-->
       <div class="pages">
-        <!--<a href="" class="">上一页</a>-->
-        <!--<a href="" class="cur">1</a>-->
-        <!--<a href="">2</a>-->
-        <!--<a href="">3</a>-->
-        <!--<a href="">4</a>-->
-        <!--<a href="">5</a>-->
-        <!--<a href="">下一页</a>-->
+        <a href="" @click.self.prevent="togglePage(-1)" :class="{default:pno<=1}">上一页</a>
+        <a v-for="(temp,key) in pageCount" :key=key :class="{cur:pno==temp}" href="" @click.self.prevent="changePage(temp)">{{temp}}</a>
+        <a href="" @click.self.prevent="togglePage(1)" :class="{default:pno>=pageCount}">下一页</a>
       </div>
     </div>
   </div>
@@ -34,7 +29,9 @@
 export default {
   data (){
     return {
-
+      newsList:[],
+      pno:1,
+      pageCount:0
     }
   },
   mounted(){
@@ -43,8 +40,55 @@ export default {
   methods: {
     getList(){
       var self=this;
-      var pno=1;
-      self.$axios.get('http://127.0.0.1:3000/news/list/'+pno)
+      self.$axios({
+        method: 'get',
+        baseURL:'http://127.0.0.1:3000/',
+        url: '/news/list/'+self.pno,
+        withCredentials: true,
+        responseType: 'json',
+        transformResponse:function(response){
+          self.newsList=response.data;
+          self.pageCount=response.pageCount;
+        },
+      });
+    },
+    // 点击页面切换
+    changePage(index){
+      var self=this;
+      self.pno=index;
+      self.$axios({
+        method: 'get',
+        baseURL:'http://127.0.0.1:3000/',
+        url: '/news/list/'+self.pno,
+        withCredentials: true,
+        responseType: 'json',
+        transformResponse:function(response){
+          self.newsList=response.data;
+          self.pageCount=response.pageCount;
+        },
+      });
+    },
+    //点击上一页/下一页事件
+    togglePage(index){
+      var self=this;
+      if(index>0){
+        if(self.pno>=self.pageCount)return;
+        self.pno++;
+      }else{
+        if(self.pno<=1)return
+        self.pno--;
+      }
+      self.$axios({
+        method: 'get',
+        baseURL:'http://127.0.0.1:3000/',
+        url: '/news/list/'+self.pno,
+        withCredentials: true,
+        responseType: 'json',
+        transformResponse:function(response){
+          self.newsList=response.data;
+          self.pageCount=response.pageCount;
+        },
+      });
     }
   }
 }
