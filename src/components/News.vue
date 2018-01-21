@@ -19,7 +19,7 @@
       <!-- 分页导航-->
       <div class="pages">
         <a href="" @click.self.prevent="togglePage(-1)" :class="{default:pno<=1}">上一页</a>
-        <a v-for="(temp,key) in pageCount" :key=key :class="{cur:pno==temp}" href="" @click.self.prevent="changePage(temp)">{{temp}}</a>
+        <a v-for="(temp,key) in realPage" :key=key :class="{cur:pno==temp}" href="" @click.self.prevent="changePage(temp)">{{temp}}</a>
         <a href="" @click.self.prevent="togglePage(1)" :class="{default:pno>=pageCount}">下一页</a>
       </div>
     </div>
@@ -89,6 +89,32 @@ export default {
           self.pageCount=response.pageCount;
         },
       });
+    }
+  },
+  computed :{
+    realPage:function(){
+      let left=1;
+      let right=this.pageCount;
+      var realCount=[];
+      if(right>=3){
+        if(this.pno>1 && this.pno<this.pageCount-1){ //123
+          left=this.pno-1;
+          right=this.pno+1;
+        }else {
+          if(this.pno<=3){
+          left=1;
+          right=3;
+         }else{
+           left=this.pageCount-2;
+           right=this.pageCount;
+         }
+        }
+      }
+      while(left<=right){
+        realCount.push(left);
+        left++;
+      }
+      return realCount;
     }
   }
 }
