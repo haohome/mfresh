@@ -60,13 +60,15 @@ export default {
     //获取轮播图背景图片
     getCarosel(){
       var self=this;
-      self.$axios.get('http://127.0.0.1:3000/carosel/product')
-      .then(function (response) {
-      self.bannerList=response.data;
-      
-      })
-      .catch(function (error) {
-        console.log(error);
+      self.$axios({
+        method: 'get',
+        baseURL:'http://127.0.0.1:3000',
+        url: '/carosel/product',
+        withCredentials: true,
+        responseType: 'json',
+        transformResponse:[function(response){
+          self.bannerList=response;
+        }],
       });
     }
   }
